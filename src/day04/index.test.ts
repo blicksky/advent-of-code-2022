@@ -1,5 +1,9 @@
 import { exampleInput, puzzleInput } from "./input";
-import { parseAssignments, countFullyContainedPairs } from "./index";
+import {
+  parseAssignments,
+  countFullyContainedPairs,
+  countOverlappingPairs,
+} from "./index";
 
 describe("Day 4", () => {
   it("parses input", () => {
@@ -45,13 +49,13 @@ describe("Day 4", () => {
     });
   });
 
-  // describe("part 2", () => {
-  //   it("example", () => {
+  describe("part 2", () => {
+    it("example", () => {
+      expect(countOverlappingPairs(parseAssignments(exampleInput))).toEqual(4);
+    });
 
-  //   });
-
-  //   it("puzzle", () => {
-
-  //   });
-  // });
+    it("puzzle", () => {
+      expect(countOverlappingPairs(parseAssignments(puzzleInput))).toEqual(905);
+    });
+  });
 });
