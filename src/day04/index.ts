@@ -40,16 +40,16 @@ export function countFullyContainedPairs(
 
 function overlaps(assignments: AssignmentPair): boolean {
   const [
-    [elf1FirstSection, elf1LastSection],
-    [elf2FirstSection, elf2LastSection],
-  ] = assignments;
+    [lowerElfFirstSection, lowerElfLastSection],
+    [higherElfFirstSection, higherElfLastSection],
+  ] = assignments.sort(
+    ([elf1FirstSection], [elf2FirstSection]) =>
+      elf1FirstSection - elf2FirstSection
+  );
 
   return (
-    (elf1FirstSection <= elf1FirstSection &&
-      elf1LastSection >= elf2FirstSection &&
-      elf1FirstSection <= elf2FirstSection) ||
-    (elf2LastSection >= elf1FirstSection &&
-      elf2FirstSection <= elf1FirstSection)
+    lowerElfLastSection >= higherElfFirstSection &&
+    lowerElfFirstSection <= higherElfLastSection
   );
 }
 
