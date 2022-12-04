@@ -33,9 +33,7 @@ function fullyContains(assignments: AssignmentPair): boolean {
 export function countFullyContainedPairs(
   assignmentPairs: Array<AssignmentPair>
 ): number {
-  return assignmentPairs.reduce((count, assignmentPair) => {
-    return count + (fullyContains(assignmentPair) ? 1 : 0);
-  }, 0);
+  return assignmentPairs.filter(fullyContains).length;
 }
 
 function overlaps(assignments: AssignmentPair): boolean {
@@ -56,7 +54,5 @@ function overlaps(assignments: AssignmentPair): boolean {
 export function countOverlappingPairs(
   assignmentPairs: Array<AssignmentPair>
 ): number {
-  return assignmentPairs.reduce((count, assignmentPair) => {
-    return count + (overlaps(assignmentPair) ? 1 : 0);
-  }, 0);
+  return assignmentPairs.filter(overlaps).length;
 }
