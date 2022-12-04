@@ -7,7 +7,8 @@
     "test": "jest --verbose",
     "test:day01": "npm test -- src/day01",
     "test:day02": "npm test -- src/day02",
-    "test:day03": "npm test -- src/day03"
+    "test:day03": "npm test -- src/day03",
+    "test:day04": "npm test -- src/day04"
   },
   "dependencies": {
     "parcel-bundler": "^1.6.1"
