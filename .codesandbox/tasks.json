@@ -12,6 +12,10 @@
     "npm test": {
       "name": "test",
       "command": "npm test"
+    },
+    "npm run test:day04": {
+      "name": "npm run test:day04",
+      "command": "npm run test:day04"
     }
   }
 }
