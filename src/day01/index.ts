@@ -3,13 +3,11 @@ const sum = (items: Array<number>): number => {
 };
 
 export function findMost(input: Array<Array<number>>): number {
-  return input
-    .map((items) => sum(items))
-    .reduce((max, sum) => Math.max(max, sum));
+  return Math.max(...input.map(sum));
 }
 
 export function findTopThree(input: Array<Array<number>>): any {
-  const sums = input.map((items) => sum(items));
+  const sums = input.map(sum);
 
   const maxes: [number, number, number] = [0, 0, 0];
 
@@ -22,4 +20,23 @@ export function findTopThree(input: Array<Array<number>>): any {
   }
 
   return sum(maxes);
+}
+
+const ascending = (a: number, b: number): number => a - b;
+
+export function findTopThreeFunctional(input: Array<Array<number>>): any {
+  return sum(
+    input.map(sum).reduce(
+      ([smallest, ...others], sum) => {
+        return [sum > smallest ? sum : smallest, ...others].sort(ascending);
+      },
+      [0, 0, 0]
+    )
+  );
+}
+
+const descending = (a: number, b: number): number => b - a;
+
+export function findTopThreeBySorting(input: Array<Array<number>>): any {
+  return sum(input.map(sum).sort(descending).slice(0, 3));
 }

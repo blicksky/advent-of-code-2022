@@ -8,6 +8,7 @@
     "allowJs": true,
     "lib": ["es6"],
     "rootDir": "src",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "target": "es2021"
   }
 }
