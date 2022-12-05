@@ -26,8 +26,6 @@ function parseStacks(input: string) {
     stacks.set(stackId, []);
   });
 
-  console.log(stackIdIndices);
-
   rows.forEach((row) => {
     stackIdIndices.forEach(({ stackId, index }) => {
       const stack = stacks.get(stackId)!;
