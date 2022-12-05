@@ -2,6 +2,7 @@ import { exampleInput, puzzleInput } from "./input";
 import {
   parseStacksAndProcedureInputs,
   executeProcedure,
+  execute9001Procedure,
   getTopCratesString,
 } from "./index";
 
@@ -39,13 +40,17 @@ describe("Day 5", () => {
     });
   });
 
-  // describe("part 2", () => {
-  //   it("example", () => {
-  //     expect(countOverlappingPairs(parseAssignments(exampleInput))).toEqual(4);
-  //   });
+  describe("part 2", () => {
+    it("example", () => {
+      const { stacks, procedure } = parseStacksAndProcedureInputs(exampleInput);
+      execute9001Procedure(stacks, procedure);
+      expect(getTopCratesString(stacks)).toEqual("MCD");
+    });
 
-  //   it("puzzle", () => {
-  //     expect(countOverlappingPairs(parseAssignments(puzzleInput))).toEqual(905);
-  //   });
-  // });
+    it("puzzle", () => {
+      const { stacks, procedure } = parseStacksAndProcedureInputs(puzzleInput);
+      execute9001Procedure(stacks, procedure);
+      expect(getTopCratesString(stacks)).toEqual("STHGRZZFR");
+    });
+  });
 });

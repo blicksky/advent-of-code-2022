@@ -72,6 +72,16 @@ export function executeProcedure(stacks: StackSet, procedure: Procedure): void {
   });
 }
 
+export function execute9001Procedure(
+  stacks: StackSet,
+  procedure: Procedure
+): void {
+  procedure.forEach(({ quantity, fromStackId, toStackId }) => {
+    const crates = stacks.get(fromStackId)!.splice(-quantity);
+    stacks.get(toStackId)!.push(...crates);
+  });
+}
+
 export function getTopCratesString(stacks: StackSet): string {
   return [...stacks.values()].map((crates) => crates.pop()).join("");
 }
