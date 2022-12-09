@@ -1,7 +1,7 @@
 import { exampleInput, puzzleInput } from "./input";
 import { findSmallFiles } from "./index";
 
-describe("Day 5", () => {
+describe("Day 7", () => {
   describe("part 1 & 2", () => {
     it("example", () => {
       const { sumOfSmallSizes, sizeToDelete } = findSmallFiles(exampleInput);
