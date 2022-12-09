@@ -27,64 +27,60 @@ export function parseMotions(motionsInput: string): Motion[] {
 type Position = { row: number; column: number };
 type PositionKey = `${number}-${number}`;
 
-export function countTailPositions(motions: Motion[]): number {
+export function countTailPositions(
+  motions: Motion[],
+  ropeLength: number
+): number {
   const visitedTailPositions = new Set<PositionKey>();
 
-  const headPosition: Position = { row: 0, column: 0 };
-  const tailPosition: Position = { row: 0, column: 0 };
+  const moveHeadKnot = (direction: Direction): void => {
+    const headKnot = knots[0];
+
+    if (direction === Direction.Up) {
+      headKnot.row += 1;
+    } else if (direction === Direction.Down) {
+      headKnot.row -= 1;
+    } else if (direction === Direction.Right) {
+      headKnot.column += 1;
+    } else if (direction === Direction.Left) {
+      headKnot.column -= 1;
+    }
+  };
+
+  const moveKnot = (knotIndex: number): void => {
+    const movingKnot = knots[knotIndex];
+    const pullingKnot = knots[knotIndex - 1];
+
+    const rowDifference = pullingKnot.row - movingKnot.row;
+    const columnDifference = pullingKnot.column - movingKnot.column;
+
+    if (Math.abs(rowDifference) > 1 && columnDifference === 0) {
+      movingKnot.row += Math.sign(rowDifference);
+    } else if (Math.abs(columnDifference) > 1 && rowDifference === 0) {
+      movingKnot.column += Math.sign(columnDifference);
+    } else if (Math.abs(columnDifference) + Math.abs(rowDifference) > 2) {
+      movingKnot.row += Math.sign(rowDifference);
+      movingKnot.column += Math.sign(columnDifference);
+    }
+  };
+
+  const knots = Array.from(
+    { length: ropeLength },
+    () => ({ row: 0, column: 0 } as Position)
+  );
 
   motions.forEach(({ direction, distance }) => {
     for (let step = 0; step < distance; ++step) {
-      if (direction === Direction.Up) {
-        headPosition.row += 1;
-      } else if (direction === Direction.Down) {
-        headPosition.row -= 1;
-      } else if (direction === Direction.Right) {
-        headPosition.column += 1;
-      } else if (direction === Direction.Left) {
-        headPosition.column -= 1;
+      moveHeadKnot(direction);
+
+      for (let knotIndex = 1; knotIndex < knots.length; ++knotIndex) {
+        moveKnot(knotIndex);
       }
 
-      const rowDifference = headPosition.row - tailPosition.row;
-      const columnDifference = headPosition.column - tailPosition.column;
-
-      if (Math.abs(rowDifference) > 1 && columnDifference === 0) {
-        tailPosition.row += Math.sign(rowDifference);
-        // console.log("vertical", {
-        //   direction,
-        //   distance,
-        //   rowDiff: Math.sign(rowDifference),
-        //   colDiff: Math.sign(columnDifference),
-        // });
-      } else if (Math.abs(columnDifference) > 1 && rowDifference === 0) {
-        tailPosition.column += Math.sign(columnDifference);
-        // console.log("horizontal", {
-        //   direction,
-        //   distance,
-        //   rowDiff: Math.sign(rowDifference),
-        //   colDiff: Math.sign(columnDifference),
-        // });
-      } else if (Math.abs(columnDifference) + Math.abs(rowDifference) > 2) {
-        tailPosition.row += Math.sign(rowDifference);
-        tailPosition.column += Math.sign(columnDifference);
-        // console.log("diagonal", {
-        //   direction,
-        //   distance,
-        //   rowDiff: Math.sign(rowDifference),
-        //   colDiff: Math.sign(columnDifference),
-        // });
-      }
-
-      visitedTailPositions.add(`${tailPosition.row}-${tailPosition.column}`);
+      const tailKnot = knots[knots.length - 1];
+      visitedTailPositions.add(`${tailKnot.row}-${tailKnot.column}`);
     }
   });
-
-  //   console.log({
-  //     headPosition,
-  //     tailPosition,
-  //     visitedTailPositions,
-  //     size: visitedTailPositions.size,
-  //   });
 
   return visitedTailPositions.size;
 }
