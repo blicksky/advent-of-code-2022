@@ -1,5 +1,5 @@
-import { exampleInput } from "./input";
-import { Direction, parseMotions } from "./index";
+import { exampleInput, puzzleInput } from "./input";
+import { Direction, parseMotions, countTailPositions } from "./index";
 
 describe("Day 9", () => {
   it("parses input", () => {
@@ -18,9 +18,15 @@ describe("Day 9", () => {
   });
 
   describe("part 1", () => {
-    it("example", () => {});
+    it("example", () => {
+      const motions = parseMotions(exampleInput);
+      expect(countTailPositions(motions)).toEqual(13);
+    });
 
-    it.skip("puzzle", () => {});
+    it("puzzle", () => {
+      const motions = parseMotions(puzzleInput);
+      expect(countTailPositions(motions)).toEqual(6011);
+    });
   });
 
   describe.skip("part 2", () => {
