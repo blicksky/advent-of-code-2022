@@ -1,10 +1,10 @@
-const exampleInput = `
+export const exampleInput = `
 noop
 addx 3
 addx -5
 `.trim();
 
-const longerExampleInput = `
+export const largerExampleInput = `
 addx 15
 addx -11
 addx 6
@@ -153,7 +153,7 @@ noop
 noop
 `.trim();
 
-const puzzleInput = `
+export const puzzleInput = `
 addx 1
 noop
 addx 5
@@ -297,5 +297,3 @@ noop
 noop
 noop
 `.trim();
-
-module.exports = { exampleInput, longerExampleInput, puzzleInput };
