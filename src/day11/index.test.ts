@@ -1,4 +1,4 @@
-import { parseNotes, main } from "./index";
+import { parseNotes, runRound, calculateMonkeyBusinessLevel } from "./index";
 import { exampleInput, puzzleInput } from "./input";
 
 describe("Day 11", () => {
@@ -11,6 +11,7 @@ describe("Day 11", () => {
         testDivisor: 23,
         testPassedTargetMonkey: 2,
         testFailedTargetMonkey: 3,
+        inspectionCount: 0,
       },
       {
         items: [54, 65, 75, 74],
@@ -18,6 +19,7 @@ describe("Day 11", () => {
         testDivisor: 19,
         testPassedTargetMonkey: 2,
         testFailedTargetMonkey: 0,
+        inspectionCount: 0,
       },
       {
         items: [79, 60, 97],
@@ -25,6 +27,7 @@ describe("Day 11", () => {
         testDivisor: 13,
         testPassedTargetMonkey: 1,
         testFailedTargetMonkey: 3,
+        inspectionCount: 0,
       },
       {
         items: [74],
@@ -32,31 +35,38 @@ describe("Day 11", () => {
         testDivisor: 17,
         testPassedTargetMonkey: 0,
         testFailedTargetMonkey: 1,
+        inspectionCount: 0,
       },
     ]);
   });
 
   describe("part 1", () => {
-    it.skip("example input", () => {
-      const notes = parseNotes(exampleInput);
-      expect(main()).toEqual(0);
+    it("example input", () => {
+      const monkeys = parseNotes(exampleInput);
+      for (let i = 0; i < 20; ++i) {
+        runRound(monkeys);
+      }
+      expect(calculateMonkeyBusinessLevel(monkeys)).toEqual(10605);
     });
 
-    it.skip("puzzle input", () => {
-      const notes = parseNotes(puzzleInput);
-      expect(main()).toEqual(0);
+    it("puzzle input", () => {
+      const monkeys = parseNotes(puzzleInput);
+      for (let i = 0; i < 20; ++i) {
+        runRound(monkeys);
+      }
+      expect(calculateMonkeyBusinessLevel(monkeys)).toEqual(58056);
     });
   });
 
   describe.skip("part 2", () => {
     it("example input", () => {
       const notes = parseNotes(exampleInput);
-      expect(main()).toEqual(0);
+      // expect(runRound()).toEqual(0);
     });
 
     it("puzzle input", () => {
       const notes = parseNotes(puzzleInput);
-      expect(main()).toEqual(0);
+      // expect(runRound()).toEqual(0);
     });
   });
 });
