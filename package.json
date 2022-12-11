@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "test": "jest --verbose"
+    "test": "jest --verbose --roots src/ --test-path-pattern",
+    "init-day": "./init-day.sh"
   },
   "dependencies": {
     "parcel-bundler": "^1.6.1"
