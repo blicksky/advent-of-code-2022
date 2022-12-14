@@ -114,15 +114,71 @@ describe("Day 13", () => {
     });
   });
 
-  describe.skip("part 2", () => {
+  describe("part 2", () => {
     it("example input", () => {
-      const input = parseInput(exampleInput);
-      expect(main()).toEqual(0);
+      const sortedPackets = exampleInput
+        .split("\n")
+        .filter(Boolean)
+        .map(parsePacketData)
+        .concat([[[2]], [[6]]])
+        .sort(valueComparator);
+
+      const index =
+        1 +
+        sortedPackets.findIndex((packet) => {
+          return (
+            packet.length === 1 &&
+            isList(packet[0]) &&
+            packet[0].length === 1 &&
+            packet[0][0] === 2
+          );
+        });
+
+      const index2 =
+        1 +
+        sortedPackets.findIndex((packet) => {
+          return (
+            packet.length === 1 &&
+            isList(packet[0]) &&
+            packet[0].length === 1 &&
+            packet[0][0] === 6
+          );
+        });
+
+      expect(index * index2).toEqual(140);
     });
 
     it("puzzle input", () => {
-      const input = parseInput(puzzleInput);
-      expect(main()).toEqual(0);
+      const sortedPackets = puzzleInput
+        .split("\n")
+        .filter(Boolean)
+        .map(parsePacketData)
+        .concat([[[2]], [[6]]])
+        .sort(valueComparator);
+
+      const index =
+        1 +
+        sortedPackets.findIndex((packet) => {
+          return (
+            packet.length === 1 &&
+            isList(packet[0]) &&
+            packet[0].length === 1 &&
+            packet[0][0] === 2
+          );
+        });
+
+      const index2 =
+        1 +
+        sortedPackets.findIndex((packet) => {
+          return (
+            packet.length === 1 &&
+            isList(packet[0]) &&
+            packet[0].length === 1 &&
+            packet[0][0] === 6
+          );
+        });
+
+      expect(index * index2).toEqual(24190);
     });
   });
 });
