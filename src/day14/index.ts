@@ -81,4 +81,41 @@ export function parseCave(input: string): Cave {
   };
 }
 
-export function main() {}
+const potentialColumnShifts = [0, -1, 1] as const;
+
+export function simulateSand(cave: Cave): number {
+  let stoppedSandUnitCount = 0;
+
+  newSand: while (true) {
+    let sandTile: Tile = { depth: 0, column: 500 };
+
+    sandFall: while (true) {
+      const didSandMove = potentialColumnShifts.some((potentialColumnShift) => {
+        const fallTile: Tile = {
+          depth: sandTile.depth + 1,
+          column: sandTile.column + potentialColumnShift,
+        };
+
+        const fallTileKey = getTileKey(fallTile);
+        if (!cave.blockedTiles.has(fallTileKey)) {
+          sandTile = fallTile;
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      if (!didSandMove) {
+        cave.blockedTiles.add(getTileKey(sandTile));
+        stoppedSandUnitCount += 1;
+        break sandFall;
+      }
+
+      if (sandTile.depth >= cave.maxDepth) {
+        break newSand;
+      }
+    }
+  }
+
+  return stoppedSandUnitCount;
+}

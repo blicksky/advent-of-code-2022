@@ -1,29 +1,28 @@
-import { parseCave, main } from "./index";
+import { parseCave, simulateSand } from "./index";
 import { exampleInput, puzzleInput } from "./input";
 
 describe("Day 14", () => {
   describe("part 1", () => {
     it("example input", () => {
       const cave = parseCave(exampleInput);
-      console.log(cave);
-      // expect(main()).toEqual(0);
+      expect(simulateSand(cave)).toEqual(24);
     });
 
-    it.skip("puzzle input", () => {
-      const input = parseCave(puzzleInput);
-      expect(main()).toEqual(0);
+    it("puzzle input", () => {
+      const cave = parseCave(puzzleInput);
+      expect(simulateSand(cave)).toEqual(578);
     });
   });
 
   describe.skip("part 2", () => {
     it("example input", () => {
       const input = parseCave(exampleInput);
-      expect(main()).toEqual(0);
+      // expect(simulateSand()).toEqual(0);
     });
 
     it("puzzle input", () => {
       const input = parseCave(puzzleInput);
-      expect(main()).toEqual(0);
+      // expect(simulateSand()).toEqual(0);
     });
   });
 });
