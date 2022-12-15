@@ -1,4 +1,4 @@
-import { parseCave, simulateSand } from "./index";
+import { parseCave, simulateSand, simulateSandWithFloor } from "./index";
 import { exampleInput, puzzleInput } from "./input";
 
 describe("Day 14", () => {
@@ -14,15 +14,15 @@ describe("Day 14", () => {
     });
   });
 
-  describe.skip("part 2", () => {
+  describe("part 2", () => {
     it("example input", () => {
-      const input = parseCave(exampleInput);
-      // expect(simulateSand()).toEqual(0);
+      const cave = parseCave(exampleInput);
+      expect(simulateSandWithFloor(cave)).toEqual(93);
     });
 
-    it("puzzle input", () => {
-      const input = parseCave(puzzleInput);
-      // expect(simulateSand()).toEqual(0);
+    it("example input", () => {
+      const cave = parseCave(puzzleInput);
+      expect(simulateSandWithFloor(cave)).toEqual(24377);
     });
   });
 });

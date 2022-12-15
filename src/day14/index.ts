@@ -25,12 +25,11 @@ type Tile = {
   column: number;
 };
 
-type RockPath = Tile[];
-
 type TileKey = `d${number}c${number}`;
 
 type Cave = {
-  blockedTiles: Set<TileKey>;
+  rockTiles: Set<TileKey>;
+  sandTiles: Set<TileKey>;
   maxDepth: number;
 };
 
@@ -48,7 +47,7 @@ export function parseCave(input: string): Cave {
     })
   );
 
-  const blockedTiles = new Set<TileKey>();
+  const rockTiles = new Set<TileKey>();
   let maxDepth = 0;
 
   rockPaths.forEach((rockPath) => {
@@ -62,23 +61,42 @@ export function parseCave(input: string): Cave {
         const maxColumn = Math.max(point.column, nextPoint.column);
 
         for (let c = minColumn; c <= maxColumn; ++c) {
-          blockedTiles.add(getTileKey({ depth: point.depth, column: c }));
+          rockTiles.add(getTileKey({ depth: point.depth, column: c }));
         }
       } else if (point.column === nextPoint.column) {
         const minDepth = Math.min(point.depth, nextPoint.depth);
         const maxDepth = Math.max(point.depth, nextPoint.depth);
 
         for (let d = minDepth; d <= maxDepth; ++d) {
-          blockedTiles.add(getTileKey({ depth: d, column: point.column }));
+          rockTiles.add(getTileKey({ depth: d, column: point.column }));
         }
       }
     }
   });
 
   return {
-    blockedTiles,
+    rockTiles,
+    sandTiles: new Set(),
     maxDepth,
   };
+}
+
+function printCave(cave: Cave): void {
+  const rows: string[] = [];
+  for (let depth = 0; depth < cave.maxDepth + 4; depth += 1) {
+    let row = "";
+    for (let column = 410; column < 520; column += 1) {
+      row +=
+        cave.rockTiles.has(getTileKey({ depth, column })) ||
+        depth === cave.maxDepth + 2
+          ? "#"
+          : cave.sandTiles.has(getTileKey({ depth, column }))
+          ? "o"
+          : ".";
+    }
+    rows.push(row);
+  }
+  console.log(rows.join("\n"));
 }
 
 const potentialColumnShifts = [0, -1, 1] as const;
@@ -97,7 +115,10 @@ export function simulateSand(cave: Cave): number {
         };
 
         const fallTileKey = getTileKey(fallTile);
-        if (!cave.blockedTiles.has(fallTileKey)) {
+        if (
+          !cave.rockTiles.has(fallTileKey) &&
+          !cave.sandTiles.has(fallTileKey)
+        ) {
           sandTile = fallTile;
           return true;
         } else {
@@ -106,13 +127,56 @@ export function simulateSand(cave: Cave): number {
       });
 
       if (!didSandMove) {
-        cave.blockedTiles.add(getTileKey(sandTile));
+        cave.sandTiles.add(getTileKey(sandTile));
         stoppedSandUnitCount += 1;
         break sandFall;
       }
 
       if (sandTile.depth >= cave.maxDepth) {
         break newSand;
+      }
+    }
+  }
+
+  return stoppedSandUnitCount;
+}
+
+export function simulateSandWithFloor(cave: Cave): number {
+  let stoppedSandUnitCount = 0;
+
+  newSand: while (true) {
+    let sandTile: Tile = { depth: 0, column: 500 };
+
+    sandFall: while (true) {
+      const didSandMove = potentialColumnShifts.some((potentialColumnShift) => {
+        const fallTile: Tile = {
+          depth: sandTile.depth + 1,
+          column: sandTile.column + potentialColumnShift,
+        };
+
+        const fallTileKey = getTileKey(fallTile);
+        if (
+          cave.rockTiles.has(fallTileKey) ||
+          cave.sandTiles.has(fallTileKey) ||
+          fallTile.depth >= cave.maxDepth + 2
+        ) {
+          return false;
+        } else {
+          sandTile = fallTile;
+          return true;
+        }
+      });
+
+      if (!didSandMove) {
+        cave.sandTiles.add(getTileKey(sandTile));
+        stoppedSandUnitCount += 1;
+
+        if (sandTile.depth === 0) {
+          console.log("breaking newSand");
+          break newSand;
+        }
+
+        break sandFall;
       }
     }
   }
