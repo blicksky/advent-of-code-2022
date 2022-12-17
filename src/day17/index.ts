@@ -141,14 +141,11 @@ function printChamber({
   fallingRockPoints: PointSet;
 }) {
   const rows = [];
-  for (
-    let h = Math.max(
-      fallingRockPoints.highestPoint,
-      stoppedRockPoints.highestPoint
-    );
-    h >= 0;
-    h -= 1
-  ) {
+  const highestPoint = Math.max(
+    fallingRockPoints.highestPoint,
+    stoppedRockPoints.highestPoint
+  );
+  for (let h = highestPoint; h >= highestPoint - 50; h -= 1) {
     const row = [];
     for (let c = 0; c < CHAMBER_WIDTH; c += 1) {
       const point: Point = { fromBottom: h, fromLeft: c };
@@ -180,6 +177,7 @@ export function main(gasJetPattern: string, dropLimit: number): number {
 
   for (let drop = 0; drop < dropLimit; drop += 1) {
     const rock: RockShape = rockSequence.next().value;
+
     const appearancePoint: Point = {
       fromBottom: stoppedRockPoints.highestPoint + 4,
       fromLeft: 2,

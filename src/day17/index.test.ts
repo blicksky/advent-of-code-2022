@@ -49,13 +49,25 @@ describe("Day 17", () => {
     });
   });
 
-  describe.skip("part 2", () => {
-    it("example input", () => {
-      // const input = parseInput(exampleInput);
-      // expect(main()).toEqual(0);
+  describe("part 2", () => {
+    it.skip("example input", () => {
+      /*
+      Ideas:
+      - record the first three drops for each shape/gas-jet-sequence-position pair,
+        as there are always 3 unobstructed lines, so it should always move the
+        same way. Could even improve that by looking ahead to the next 3 gas-jet
+        directions, and use that as the key for recording.
+        - maybe could extend that to sequences beyond 3 if you include the pattern
+          of the stopped rocks for each line down that you want to extend the
+          sequence by. So, 4 drops if you include the top-most line of stopped
+          rocks in the key, 5 drops if you include 2 top-most, etc.
+      - cut off all points below when a new floor is found, though I'm not sure the
+        storage of points is an issue, because this seems to run in linear time
+      */
+      expect(main(puzzleInput, 1000000000000)).toEqual(1514285714288);
     });
 
-    it("puzzle input", () => {
+    it.skip("puzzle input", () => {
       // const input = parseInput(puzzleInput);
       // expect(main()).toEqual(0);
     });
