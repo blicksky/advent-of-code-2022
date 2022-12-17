@@ -1,4 +1,4 @@
-import { getGasJetSequence, getRockSequence, RockShape } from "./index";
+import { GasJet, getGasJetSequence, getRockSequence, RockShape } from "./index";
 import { exampleInput, puzzleInput } from "./input";
 
 describe("Day 17", () => {
@@ -9,6 +9,8 @@ describe("Day 17", () => {
     for (let i = 0; i < exampleInput.length * 2; i += 1) {
       gasJetDirections.push(gasJetSequence.next().value);
     }
+
+    expect(gasJetDirections[0]).toEqual(GasJet.Right);
 
     expect(gasJetDirections).toEqual([...exampleInput, ...exampleInput]);
   });

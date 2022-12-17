@@ -1,24 +1,25 @@
-type GasJetLeft = "<";
-type GasJetRight = ">";
-type GasJetDirection = GasJetLeft | GasJetRight;
+export const GasJet = {
+  Left: "<",
+  Right: ">",
+} as const;
 
-export function* getGasJetSequence(pattern: string): Iterator<GasJetDirection> {
+type GasJetDirectionName = keyof typeof GasJet;
+type GasJetDirection = typeof GasJet[GasJetDirectionName];
+
+export function* getGasJetSequence(
+  pattern: string
+): Iterator<GasJetDirection, never, never> {
   for (let i = 0; true; i = (i + 1) % pattern.length) {
     yield pattern[i] as GasJetDirection;
   }
 }
 
-type RockShapeName =
-  | "HorizontalLine"
-  | "Plus"
-  | "Hook"
-  | "VerticalLine"
-  | "Square";
-
 type Coord = [number, number];
 type RockShape = Readonly<Array<Readonly<Coord>>>;
 
-export const RockShape: Readonly<Record<RockShapeName, RockShape>> = {
+export const RockShape: Readonly<
+  Record<string, Readonly<Array<Readonly<Coord>>>>
+> = {
   HorizontalLine: [
     [0, 0],
     [0, 1],
@@ -53,7 +54,7 @@ export const RockShape: Readonly<Record<RockShapeName, RockShape>> = {
   ],
 } as const;
 
-export function* getRockSequence(): Iterator<RockShape> {
+export function* getRockSequence(): Iterator<RockShape, never, never> {
   while (true) {
     yield RockShape.HorizontalLine;
     yield RockShape.Plus;
