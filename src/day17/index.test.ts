@@ -1,4 +1,10 @@
-import { GasJet, getGasJetSequence, getRockSequence, RockShape } from "./index";
+import {
+  main,
+  GasJet,
+  getGasJetSequence,
+  getRockSequence,
+  RockShape,
+} from "./index";
 import { exampleInput, puzzleInput } from "./input";
 
 describe("Day 17", () => {
@@ -33,15 +39,13 @@ describe("Day 17", () => {
     expect(rocks[15]).toEqual(RockShape.HorizontalLine);
   });
 
-  describe.skip("part 1", () => {
+  describe("part 1", () => {
     it("example input", () => {
-      // const input = parseInput(exampleInput);
-      // expect(main()).toEqual(0);
+      expect(main(exampleInput, 2022)).toEqual(3068);
     });
 
     it("puzzle input", () => {
-      // const input = parseInput(puzzleInput);
-      // expect(main()).toEqual(0);
+      expect(main(puzzleInput, 2022)).toEqual(3065);
     });
   });
 
