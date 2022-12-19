@@ -13,7 +13,7 @@ describe("Day 18", () => {
       expect(main(cubes)).toEqual(64);
     });
 
-    it("puzzle input", () => {
+    it.only("puzzle input", () => {
       const cubes = parseCubes(puzzleInput);
       expect(main(cubes)).toEqual(3530);
     });
