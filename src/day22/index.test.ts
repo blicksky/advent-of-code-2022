@@ -25,27 +25,27 @@ describe("Day 22", () => {
     ]);
   });
 
-  describe.skip("part 1", () => {
+  describe("part 1", () => {
     it("example input", () => {
-      const input = parseInput(exampleInput);
-      expect(main()).toEqual(0);
+      const [board, path] = parseInput(exampleInput);
+      expect(main(board, path)).toEqual(6032);
     });
 
     it("puzzle input", () => {
-      const input = parseInput(puzzleInput);
-      expect(main()).toEqual(0);
+      const [board, path] = parseInput(puzzleInput);
+      expect(main(board, path)).toEqual(13566);
     });
   });
 
   describe.skip("part 2", () => {
     it("example input", () => {
-      const input = parseInput(exampleInput);
-      expect(main()).toEqual(0);
+      const [board, path] = parseInput(exampleInput);
+      expect(main(board, path)).toEqual(0);
     });
 
     it("puzzle input", () => {
-      const input = parseInput(puzzleInput);
-      expect(main()).toEqual(0);
+      const [board, path] = parseInput(puzzleInput);
+      expect(main(board, path)).toEqual(0);
     });
   });
 });

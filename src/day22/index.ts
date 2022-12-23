@@ -110,4 +110,85 @@ export function parseInput(input: string): [Board, Path] {
   return [board, path];
 }
 
-export function main() {}
+const turns: Record<Turn, Record<Facing, Facing>> = {
+  [Turn.Clockwise]: {
+    [Facing.Right]: Facing.Down,
+    [Facing.Down]: Facing.Left,
+    [Facing.Left]: Facing.Up,
+    [Facing.Up]: Facing.Right,
+  },
+  [Turn.CounterClockwise]: {
+    [Facing.Right]: Facing.Up,
+    [Facing.Down]: Facing.Right,
+    [Facing.Left]: Facing.Down,
+    [Facing.Up]: Facing.Left,
+  },
+} as const;
+
+const FacingValues: Record<Facing, number> = {
+  [Facing.Right]: 0,
+  [Facing.Down]: 1,
+  [Facing.Left]: 2,
+  [Facing.Up]: 3,
+} as const;
+
+export function main(board: Board, path: Path) {
+  let position: Position = {
+    row: 1,
+    column: board.boundsByRow.get(1)!.min,
+  };
+  let facing = Facing.Right;
+
+  for (const step of path) {
+    if (typeof step === "number") {
+      for (let i = 0; i < step; i += 1) {
+        const rowBounds = board.boundsByRow.get(position.row)!;
+        const columnBounds = board.boundsByColumn.get(position.column)!;
+
+        let newPosition = { ...position };
+
+        switch (facing) {
+          case Facing.Right:
+            newPosition.column =
+              position.column === rowBounds.max
+                ? rowBounds.min
+                : position.column + 1;
+            break;
+
+          case Facing.Left:
+            newPosition.column =
+              position.column === rowBounds.min
+                ? rowBounds.max
+                : position.column - 1;
+            break;
+
+          case Facing.Down:
+            newPosition.row =
+              position.row === columnBounds.max
+                ? columnBounds.min
+                : position.row + 1;
+            break;
+
+          case Facing.Up:
+            newPosition.row =
+              position.row === columnBounds.min
+                ? columnBounds.max
+                : position.row - 1;
+            break;
+        }
+
+        if (
+          board.tileMap.get(toPositionKey(newPosition)) === Marker.SolidWall
+        ) {
+          break;
+        } else {
+          position = newPosition;
+        }
+      }
+    } else {
+      facing = turns[step][facing];
+    }
+  }
+
+  return position.row * 1000 + position.column * 4 + FacingValues[facing];
+}
