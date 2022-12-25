@@ -16,8 +16,37 @@ export function fromSNAFU([...snafuNumber]: string): any {
   }, 0);
 }
 
-export function toSNAFU(decimal: number): string {
-  return "";
+export function toSNAFU(decimalNumber: number): string {
+  const pentalNumber = `0${decimalNumber.toString(5)}`;
+  const pentalDigits = Array.from(pentalNumber, (digit) => parseInt(digit, 10));
+  const snafuDigits: string[] = [];
+
+  for (let i = pentalDigits.length - 1; i >= 0; i -= 1) {
+    const pentalDigit = pentalDigits[i];
+
+    switch (pentalDigit) {
+      case 3:
+        snafuDigits.unshift("=");
+        pentalDigits[i - 1] += 1;
+        break;
+      case 4:
+        snafuDigits.unshift("-");
+        pentalDigits[i - 1] += 1;
+        break;
+      case 5:
+        snafuDigits.unshift("0");
+        pentalDigits[i - 1] += 1;
+        break;
+      default:
+        snafuDigits.unshift(pentalDigit.toString(10));
+    }
+  }
+
+  if (snafuDigits[0] === "0") {
+    snafuDigits.shift();
+  }
+
+  return snafuDigits.join("");
 }
 
 export function main() {}

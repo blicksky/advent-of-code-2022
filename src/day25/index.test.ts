@@ -1,4 +1,4 @@
-import { parseInput, fromSNAFU, main } from "./index";
+import { parseInput, fromSNAFU, toSNAFU, main } from "./index";
 import { exampleInput, puzzleInput } from "./input";
 
 describe("Day 25", () => {
@@ -19,8 +19,32 @@ describe("Day 25", () => {
   ] as [string, number][];
 
   snafuToDecimalExamples.forEach(([snafuNumber, decimalNumber]) => {
-    it(`converts ${snafuNumber} SNAFU to ${decimalNumber}`, () => {
+    it(`converts ${snafuNumber} SNAFU to ${decimalNumber} decimal`, () => {
       expect(fromSNAFU(snafuNumber)).toEqual(decimalNumber);
+    });
+  });
+
+  const decimalToSnafuExamples = [
+    [1, "1"],
+    [2, "2"],
+    [3, "1="],
+    [4, "1-"],
+    [5, "10"],
+    [6, "11"],
+    [7, "12"],
+    [8, "2="],
+    [9, "2-"],
+    [10, "20"],
+    [15, "1=0"],
+    [20, "1-0"],
+    [2022, "1=11-2"],
+    [12345, "1-0---0"],
+    [314159265, "1121-1110-1=0"],
+  ] as [number, string][];
+
+  decimalToSnafuExamples.forEach(([decimalNumber, snafuNumber]) => {
+    it(`converts ${decimalNumber} decimal to ${snafuNumber} SNAFU`, () => {
+      expect(toSNAFU(decimalNumber)).toEqual(snafuNumber);
     });
   });
 
