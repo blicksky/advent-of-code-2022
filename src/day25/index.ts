@@ -1,4 +1,6 @@
-export function parseInput(input: string) {}
+export function parseInput(input: string) {
+  return input.split("\n");
+}
 
 const snafuDigitValues: Record<string, number> = {
   "=": -2,
@@ -49,4 +51,10 @@ export function toSNAFU(decimalNumber: number): string {
   return snafuDigits.join("");
 }
 
-export function main() {}
+export function main(snafuNumbers: string[]): string {
+  const decimalSum = snafuNumbers.reduce((decimalSum, snafuNumber) => {
+    return decimalSum + fromSNAFU(snafuNumber);
+  }, 0);
+
+  return toSNAFU(decimalSum);
+}

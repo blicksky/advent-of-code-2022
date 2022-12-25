@@ -48,27 +48,27 @@ describe("Day 25", () => {
     });
   });
 
-  describe.skip("part 1", () => {
+  describe("part 1", () => {
     it("example input", () => {
       const input = parseInput(exampleInput);
-      expect(main()).toEqual(0);
+      expect(main(input)).toEqual("2=-1=0");
     });
 
     it("puzzle input", () => {
       const input = parseInput(puzzleInput);
-      expect(main()).toEqual(0);
+      expect(main(input)).toEqual("2-=2==00-0==2=022=10");
     });
   });
 
   describe.skip("part 2", () => {
     it("example input", () => {
       const input = parseInput(exampleInput);
-      expect(main()).toEqual(0);
+      // expect(main()).toEqual(0);
     });
 
     it("puzzle input", () => {
       const input = parseInput(puzzleInput);
-      expect(main()).toEqual(0);
+      // expect(main()).toEqual(0);
     });
   });
 });
