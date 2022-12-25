@@ -8,7 +8,7 @@ const snafuDigitValues: Record<string, number> = {
   "2": 2,
 } as const;
 
-export function fromSNAFU([...snafuNumber]: string): any {
+export function fromSNAFU([...snafuNumber]: string): number {
   return snafuNumber.reduce((decimalNumber, snafuDigit, i) => {
     const placeValue = Math.pow(5, snafuNumber.length - i - 1);
     const digitValue = snafuDigitValues[snafuDigit];
